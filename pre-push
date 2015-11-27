@@ -1,0 +1,16 @@
+#!/bin/bash
+protected_branch='master'  
+current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
+
+if [ $protected_branch = $current_branch ]  
+then  
+    read -p "Vas a subir cambios al master, estas seguro? [S|n] " -n$
+    echo
+    if echo $REPLY | grep -E '^[Ss]$' > /dev/null
+    then
+        exit 0 # el push procede
+    fi
+    exit 1 # cancelar el push
+else  
+    exit 0 # el push procede
+fi
